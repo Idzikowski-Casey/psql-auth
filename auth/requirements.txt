@@ -1,0 +1,5 @@
+
+psycopg
+psycopg_binary
+requests
+pytest

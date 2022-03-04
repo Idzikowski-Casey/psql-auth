@@ -1,0 +1,22 @@
+version: "3.7"
+services:
+  tests:
+    build: ./auth
+    environment:
+      - POSTGRES_DB
+      - DBCONN=db
+    depends_on:
+      - db
+  db:
+    build: ./database
+    environment:
+      - PGUSER
+      - POSTGRES_DB
+      # This allows connections without a password, which is expedient but insecure...
+      - POSTGRES_HOST_AUTH_METHOD=trust
+    ports:
+      - 5434:5432
+    volumes:
+      - db_cluster:/var/lib/postgresql/data
+volumes:
+  db_cluster:
