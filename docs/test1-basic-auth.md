@@ -2,6 +2,10 @@
 
 ### testing general db roles and row level security options
 
+### Important Concepts
+
+- Row level securities can easily be configured with database roles to ensure data privileges.
+
 ### SQL Overview:
 
 Contents in `/auth/database/fixtures/00-basic_auth.sql`.
