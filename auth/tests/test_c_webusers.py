@@ -1,4 +1,4 @@
-from auth.database import Database, get_sql
+from .fixtures import Database, get_sql
 
 """ Testing the 3rd SQL file auth stuff. ROW LEVEL security on auth.projects,
  data.projects and data.rocks.

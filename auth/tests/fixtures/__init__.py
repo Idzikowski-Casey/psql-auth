@@ -1,6 +1,8 @@
+from pathlib import Path
 import os
 from psycopg import connect, rows
-from .fixtures import get_sql
+
+here = Path(__file__).parent
 
 db_name = os.environ.get("POSTGRES_DB", "auth_test")
 db_conn = os.environ.get("DBCONN", "localhost")
@@ -15,3 +17,9 @@ class Database:
     
     def query(self, sql, params=None):
         return self.conn.cursor().execute(sql, params)
+
+
+def get_sql(fn: str):
+    fn = here / fn
+    sql = open(fn).read()
+    return sql

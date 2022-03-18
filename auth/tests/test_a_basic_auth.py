@@ -1,4 +1,4 @@
-from auth.database import Database, get_sql
+from .fixtures import Database, get_sql
 
 def test_db_conn():
 

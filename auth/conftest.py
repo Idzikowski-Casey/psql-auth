@@ -1,4 +1,4 @@
-from auth.database import Database, get_sql
+from .tests.fixtures import Database, get_sql
 import pytest
 
 

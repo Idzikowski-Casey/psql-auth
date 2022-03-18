@@ -5,6 +5,7 @@ COPY requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . ./auth
+WORKDIR /auth/
 RUN ["chmod", "+x", "/auth/bin/run"]
 
-CMD auth/bin/run
+CMD /auth/bin/run
