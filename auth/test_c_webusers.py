@@ -65,7 +65,7 @@ def test_data_privileges():
         assert True # insert failed!
 
     description = 'Daven is trying to edit this description! This will Work!'
-    sql = f""" UPDATE data.projects
+    sql = f"""UPDATE data.projects
               SET description = '{description}'
               WHERE id = 1  
         """
@@ -89,7 +89,7 @@ def test_auth_projects_privileges():
 
     assert len(res) == 2
 
-    update_sql = """ UPDATE auth.projects SET privilege = 'reader' WHERE user_id = 4; """
+    update_sql = """ UPDATE auth.projects SET role_id = 1 WHERE user_id = 4; """
     db.conn.cursor().execute(update_sql)
 
     # now daven shouldn't be able to update project 1
@@ -129,8 +129,8 @@ def test_make_owner():
 
     assert len(res) == 2
 
-    insert_sql = """ INSERT INTO auth.projects(user_id, project_id, privilege) VALUES
-                        (3, 3, 'owner');
+    insert_sql = """ INSERT INTO auth.projects(user_id, project_id, role_id) VALUES
+                        (3, 3, 4);
                  """
     
     db.conn.cursor().execute(insert_sql)

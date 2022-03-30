@@ -43,10 +43,10 @@ def test_login_functions():
         assert res[0].get('login') is not None
 
         # ensure the current user is the one logged in
-        sql = """ SELECT auth.curuser(); """
+        sql = """ SELECT auth.current_user(); """
         res = db_api_user.query(sql).fetchall()
 
-        assert len(res) == 1 and res[0].get('curuser') == user["id"]
+        assert len(res) == 1 and res[0].get('current_user') == user["id"]
 
         sql = """ SELECT * FROM auth.users; """
 

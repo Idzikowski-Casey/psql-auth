@@ -45,7 +45,7 @@ END;
 $$ LANGUAGE plpgsql SECURITY DEFINER;
 
 /* gets the current user that is logged in */
-CREATE OR REPLACE FUNCTION auth.curuser() RETURNS int AS $$
+CREATE OR REPLACE FUNCTION auth.current_user() RETURNS int AS $$
 DECLARE
     _token uuid;
 BEGIN
@@ -124,4 +124,4 @@ ALTER TABLE auth.users ENABLE ROW LEVEL SECURITY;
 /* policy allows only the current logged in user to access their own data */
 CREATE POLICY own_user ON auth.users
 FOR SELECT 
-USING (id = auth.curuser());
+USING (id = auth.current_user());

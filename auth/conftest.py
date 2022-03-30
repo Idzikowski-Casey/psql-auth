@@ -1,4 +1,4 @@
-from .tests.fixtures import Database, get_sql
+from .fixtures import Database, get_sql
 import pytest
 
 
