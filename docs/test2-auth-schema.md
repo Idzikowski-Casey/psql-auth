@@ -32,3 +32,8 @@ The model for this desgin is to have one general database role, `api`, that has 
 **RLS on auth.users**
 
 We enable row level security for the `auth.users` table and then write a policy that ensures the only rows that can be selected are those of the current user (`auth.curuser()`). No one can see anyone elses information.
+
+### Resources
+
+- [Supabase RLS guide](https://supabase.com/docs/guides/auth/row-level-security)
+- [Postgres auth](https://postgrest.org/en/stable/auth.html#schema-isolation)
