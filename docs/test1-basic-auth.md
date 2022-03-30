@@ -8,7 +8,7 @@
 
 ### SQL Overview:
 
-Contents in `/auth/database/fixtures/00-basic_auth.sql`.
+Contents in `/auth/fixtures/00-basic_auth.sql`.
 
 In this first group of tests we create 4 users that do not inherit from their creator (which in this case
 would be the superuser `postgres`), and we allow them to `LOGIN` (i.e establish a connection with the db). We next create a basic table called `messages` that holds text information on messages sent between users. In this table the `from_user` and `to_user` will be one of the users we just created.
@@ -27,7 +27,7 @@ The policy above `ensure_user` compares the current database user (`current_user
 
 The last things we must do before creating tests is grant privileges on the `message` table to our users since they have `NOINHERIT`.
 
-The tests, which can be found at `/auth/tests/test_basic_auth.py`, are testing these row level policies to ensure they are working correctly.
+The tests, which can be found at `/auth/test_a_basic_auth.py`, are testing these row level policies to ensure they are working correctly.
 
 ### Resources
 

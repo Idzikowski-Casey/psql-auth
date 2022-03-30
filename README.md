@@ -10,7 +10,7 @@ The concepts start out basic with general db roles and a single table with row l
 
 This application is dockerized such that on initialization the database will create itself AND the tests will run in a python3 environment. Once the tests complete that container will exit. In the docker-logs you should see `11 tests passed`, signifiying all the tests have passed!!
 
-Explanations behind each test can be found in the `/docs` directory. Python tests are in the `/auth/tests` directory and all SQL files are located in `/auth/tests/fixtures`. This repository is meant for thoughtful exploration of the different ways and designs for database centered authentication. Although some application code will always be necesary, there is a balance to be struck. PostgreSQL has robust capabilities for handling data security and web-user tracking and it can add extra protection from sql-injections and other flaws in application code.
+Explanations behind each test can be found in the `/docs` directory. Python tests are in the `/auth` directory and all SQL files are located in `/auth/fixtures`. This repository is meant for thoughtful exploration of the different ways and designs for database centered authentication. Although some application code will always be necesary, there is a balance to be struck. PostgreSQL has robust capabilities for handling data security and web-user tracking and it can add extra protection from sql-injections and other flaws in application code.
 
 ### Tests Overview
 

@@ -11,7 +11,7 @@
 
 ### SQL Overview
 
-The SQL file (`/auth/database/fixtures/01-auth-schema.sql`) for these tests is a bit more complicated. Some comments are made in the file itself to aid understanding. Generally speaking this sql file does the following.
+The SQL file (`/auth/fixtures/01-auth-schema.sql`) for these tests is a bit more complicated. Some comments are made in the file itself to aid understanding. Generally speaking this sql file does the following.
 
 **Creates an `auth` schema with a `users` and `sessions` table**
 
