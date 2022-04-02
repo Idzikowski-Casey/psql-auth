@@ -17,6 +17,7 @@ Explanations behind each test can be found in the `/docs` directory. Python test
 1. Basic Auth - exploration of db roles and row level security.
 2. Auth Schema and basic RLS - user storage in db (Web/Application Users)
 3. Web Users and RLS - incorporate the auth schema and rls
+4. Postgres Logins for Web Users - ensuring RLS for DB roles
 
 #### Misscel thoughts:
 
