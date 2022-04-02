@@ -16,5 +16,9 @@ DROP SCHEMA IF EXISTS auth CASCADE;
 DROP TYPE IF EXISTS auth.data_privileges;
 DROP SCHEMA IF EXISTS data CASCADE;
 
+/* test 4 cleanups */
+DROP ROLE IF EXISTS cidz;
+DROP ROLE IF EXISTS shanan;
+
 /* All test dependent */
 DROP ROLE IF EXISTS api;

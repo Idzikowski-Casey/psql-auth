@@ -62,7 +62,7 @@ def test_data_privileges():
         db.conn.cursor().execute(sql)
         assert False
     except:
-        assert True # insert failed!
+        assert True # update failed!
 
     description = 'Daven is trying to edit this description! This will Work!'
     sql = f"""UPDATE data.projects
