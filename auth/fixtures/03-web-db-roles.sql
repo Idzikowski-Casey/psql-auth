@@ -59,7 +59,7 @@ DECLARE
     _user_id integer;
 BEGIN
     SELECT auth.get_current_db_user_id(_current_user) INTO _user_id;
-    RETURN QUERY SELECT p.project_id, r.role FROM auth.projects p 
+    RETURN QUERY SELECT p.project_id, r.role FROM auth.user_projects p 
                  JOIN auth.data_roles r
                  ON r.id = p.role_id
                  WHERE p.user_id = _user_id;
@@ -67,7 +67,7 @@ END
 $$ language plpgsql SECURITY DEFINER;
 
 -- Only project owners can view and manipulate project privileges
-CREATE POLICY owner_projects_db_user ON auth.projects
+CREATE POLICY owner_projects_db_user ON auth.user_projects
 USING (project_id IN (
     SELECT project_id from auth.db_user_projects(current_user) 
     WHERE role = 'manager'));

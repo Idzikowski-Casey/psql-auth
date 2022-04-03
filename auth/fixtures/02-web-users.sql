@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS data.rocks (
 );
 
 /* auth -> projects w/privileges mapping table */
-CREATE TABLE IF NOT EXISTS auth.projects(
+CREATE TABLE IF NOT EXISTS auth.user_projects(
     id SERIAL PRIMARY KEY,
     user_id integer REFERENCES auth.users(id),
     project_id integer REFERENCES data.projects(id),
@@ -40,22 +40,22 @@ CREATE TABLE IF NOT EXISTS auth.projects(
 /* Extend privileges of api db role */
 GRANT USAGE ON SCHEMA data TO api;
 
-GRANT USAGE, SELECT, UPDATE ON auth.projects_id_seq TO api;
-GRANT SELECT, INSERT, UPDATE, DELETE ON auth.projects TO api;
+GRANT USAGE, SELECT, UPDATE ON auth.user_projects_id_seq TO api;
+GRANT SELECT, INSERT, UPDATE, DELETE ON auth.user_projects TO api;
 
 GRANT USAGE, SELECT, UPDATE ON ALL SEQUENCES IN SCHEMA data TO api;
 GRANT SELECT, INSERT, UPDATE, DELETE ON data.projects TO api;
 GRANT SELECT, INSERT, UPDATE, DELETE ON data.rocks TO api;
 
 /* Helper functions for RLS */
- -- get user id and then map to auth.projects table
+ -- get user id and then map to auth.user_projects table
 CREATE OR REPLACE FUNCTION auth.current_user_projects() 
 RETURNS TABLE (project_id integer, role text) AS $$
 DECLARE
     _user_id integer;
 BEGIN
     SELECT auth.current_user() INTO _user_id;
-    RETURN QUERY SELECT p.project_id, r.role FROM auth.projects p 
+    RETURN QUERY SELECT p.project_id, r.role FROM auth.user_projects p 
                  JOIN auth.data_roles r
                  ON r.id = p.role_id
                  WHERE p.user_id = _user_id;
@@ -63,12 +63,12 @@ END
 $$ language plpgsql SECURITY DEFINER;
 
 /* RLS On Tables */
-ALTER TABLE auth.projects ENABLE ROW LEVEL SECURITY;
+ALTER TABLE auth.user_projects ENABLE ROW LEVEL SECURITY;
 ALTER TABLE data.projects ENABLE ROW LEVEL SECURITY;
 ALTER TABLE data.rocks ENABLE ROW LEVEL SECURITY;
 
 -- Only project owners can view and manipulate project privileges
-CREATE POLICY owner_projects ON auth.projects
+CREATE POLICY owner_projects ON auth.user_projects
 USING (project_id IN (
     SELECT project_id from auth.current_user_projects() 
     WHERE role = 'manager'));
@@ -137,7 +137,7 @@ INSERT INTO data.rocks(lithology, time_period, time, project_id) VALUES
     ('Zircon', 'archean', 2600, 1),
     ('Basalt', 'paleocene', 60, 1);
 
-INSERT INTO auth.projects(user_id, project_id, role_id) VALUES
+INSERT INTO auth.user_projects(user_id, project_id, role_id) VALUES
     (3, 1, 4),
     (4, 2, 4),
     (5, 3, 4),
@@ -154,7 +154,7 @@ BEGIN
     SELECT auth.current_user() INTO _user_id;
     SELECT id FROM auth.data_roles WHERE role = 'manager' INTO manager_id;
     IF tg_op = "INSERT" THEN
-        INSERT INTO auth.projects(user_id, project_id, role_id) VALUES
+        INSERT INTO auth.user_projects(user_id, project_id, role_id) VALUES
             (_user_id, NEW.id, manager_id);
     END IF;
     RETURN NEW;

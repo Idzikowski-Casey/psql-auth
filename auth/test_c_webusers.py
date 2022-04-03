@@ -26,7 +26,7 @@ def test_web_user_sql():
     with db.conn.cursor() as cur:
         cur.execute(sql)
     
-    sql = """ SELECT * FROM auth.projects; """
+    sql = """ SELECT * FROM auth.user_projects; """
 
     res = db.query(sql).fetchall()
 
@@ -84,12 +84,12 @@ def test_auth_projects_privileges():
     ## first as Casey access auth.projects and change daven from writer to reader
     db.conn.cursor().execute(idz_login_sql)
 
-    sql = """ SELECT * FROM auth.projects; """
+    sql = """ SELECT * FROM auth.user_projects; """
     res = db.query(sql).fetchall()
 
     assert len(res) == 2
 
-    update_sql = """ UPDATE auth.projects SET role_id = 1 WHERE user_id = 4; """
+    update_sql = """ UPDATE auth.user_projects SET role_id = 1 WHERE user_id = 4; """
     db.conn.cursor().execute(update_sql)
 
     # now daven shouldn't be able to update project 1
@@ -123,13 +123,13 @@ def test_make_owner():
 
     login(db, s_login_sql)
 
-    sql = """ SELECT * FROM auth.projects; """
+    sql = """ SELECT * FROM auth.user_projects; """
 
     res = db.query(sql).fetchall()
 
     assert len(res) == 2
 
-    insert_sql = """ INSERT INTO auth.projects(user_id, project_id, role_id) VALUES
+    insert_sql = """ INSERT INTO auth.user_projects(user_id, project_id, role_id) VALUES
                         (3, 3, 4);
                  """
     
